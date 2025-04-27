@@ -1,5 +1,5 @@
 from django.contrib import admin
-from teatr_service.models import (
+from .models import (
     Gatunek,
     Aktor,
     Sztuka,
@@ -16,4 +16,5 @@ admin.site.register(SalaTeatralna)
 admin.site.register(Przedstawienie)
 admin.site.register(Rezerwacja)
 admin.site.register(Bilet)
+
 
