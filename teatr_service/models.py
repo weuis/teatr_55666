@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Gatunek(models.Model):
     nazwa = models.CharField(max_length=255)
 
