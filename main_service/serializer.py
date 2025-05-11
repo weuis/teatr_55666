@@ -53,11 +53,32 @@ class PerformanceSerializer(serializers.ModelSerializer):
 class PerformanceDetailSerializer(serializers.ModelSerializer):
     play = PlaySerializer(read_only=True)
     theater_hall = TheaterHallSerializer(read_only=True)
+    taken_seats = serializers.SerializerMethodField()
+    available_seats = serializers.SerializerMethodField()
 
     class Meta:
         model = Performance
         fields = '__all__'
 
+    #Zwraca dla uzytkownika informacje(liste) miejsc ktore są zajęte
+    def get_taken_seats(self, obj):
+        return [
+            {"row": ticket.row, "seat": ticket.seat}
+            for ticket in obj.tickets.all()
+        ]
+
+    # Zwraca dla uzytkownika informacje(liste) miejsc ktore są wolne
+    def get_available_seats(self, obj):
+        taken_seats = set(
+            (ticket.row, ticket.seat) for ticket in obj.tickets.all()
+        )
+        available_seats = [
+            {"row": row, "seat": seat}
+            for row in range(1, obj.theater_hall.number_of_rows + 1)
+            for seat in range(1, obj.theater_hall.seats_per_row + 1)
+            if (row, seat) not in taken_seats
+        ]
+        return available_seats
 
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
