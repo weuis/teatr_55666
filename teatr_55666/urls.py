@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/theatre/', include('teatr_service.urls', namespace='teatr')),
+    path('api/v1/theatre/', include('main_service.urls', namespace='theatre')),
 
 ]

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'teatr_service',
+    'main_service',
     'rest_framework',
 ]
 
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'teatr_55666.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'frontend/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
