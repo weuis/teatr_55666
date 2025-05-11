@@ -94,3 +94,16 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"{self.performance} - Row {self.row}, Seat {self.seat}"
+
+    #Metoda do spawdzania czy miejsce jest wolne
+    @staticmethod
+    def is_seat_taken(performance, row, seat):
+        return Ticket.objects.filter(performance=performance, row=row, seat=seat).exists()
+    #Metoda do spawdzania czy te miejsce dotycze do sali
+    @staticmethod
+    def is_valid_seat(performance, row, seat):
+        hall = performance.theater_hall
+        return (
+            1 <= row <= hall.number_of_rows and
+            1 <= seat <= hall.seats_per_row
+        )

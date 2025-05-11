@@ -70,6 +70,26 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = '__all__'
 
+    def validate(self, attrs):
+        row = attrs.get('row')
+        seat = attrs.get('seat')
+        performance = attrs.get('performance')
+
+
+        # Sprawdzamy czy te miejsce dotycze do sali z konkretnym wydarzeniem
+        if not Ticket.is_valid_seat(performance, row, seat):
+            raise serializers.ValidationError(
+                f"Seat (row {row}, seat {seat}) is not valid"
+            )
+        #Spawdzamy czy miejsce jest wolne na wydarzenie
+        if self.instance is None:
+            if Ticket.is_seat_taken(performance, row, seat):
+                raise serializers.ValidationError(
+                    f"Seat (row {row}, seat {seat}) is already taken for this performance."
+                )
+
+        return attrs
+
 
 class TicketDetailSerializer(serializers.ModelSerializer):
     performance = PerformanceDetailSerializer(read_only=True)
