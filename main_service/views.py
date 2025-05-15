@@ -10,11 +10,12 @@ from main_service.serializer import (
     ReservationSerializer,
     TicketSerializer, TicketDetailSerializer
 )
-
+from main_service.permissions import IsAdminOrReadOnly, IsAdminOrAuthenticatedCreateOnly
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class ActorViewSet(viewsets.ModelViewSet):
@@ -22,11 +23,13 @@ class ActorViewSet(viewsets.ModelViewSet):
     serializer_class = ActorSerializer
     search_fields = ['first_name', 'last_name']
     ordering_fields = ['last_name', 'first_name']
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class PlayViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
     ordering_fields = ['title']
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         return Play.objects.prefetch_related('genres', 'actors')
@@ -42,11 +45,13 @@ class TheaterHallViewSet(viewsets.ModelViewSet):
     serializer_class = TheaterHallSerializer
     search_fields = ['name']
     ordering_fields = ['number_of_rows', 'seats_per_row']
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class PerformanceViewSet(viewsets.ModelViewSet):
     search_fields = ['play__title']
     ordering_fields = ['performance_time']
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         return Performance.objects.select_related('play', 'theater_hall')
@@ -59,6 +64,7 @@ class PerformanceViewSet(viewsets.ModelViewSet):
 
 class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
+    permission_classes = [IsAdminOrAuthenticatedCreateOnly]
 
     def get_queryset(self):
         return Reservation.objects.filter(user=self.request.user)
@@ -69,6 +75,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
 
 class TicketViewSet(viewsets.ModelViewSet):
     ordering_fields = ['row', 'seat']
+    permission_classes = [IsAdminOrAuthenticatedCreateOnly]
 
     def get_queryset(self):
         return Ticket.objects.select_related('performance', 'reservation')
