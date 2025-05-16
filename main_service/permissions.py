@@ -3,8 +3,8 @@ from rest_framework import permissions
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     """
-    Анонимы и залогиненные могут только читать.
-    Админ — может всё.
+    Anonimowi i zalogowani użytkownicy mogą tylko odczytywać.
+    Administrator — ma pełne uprawnienia.
     """
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
@@ -14,9 +14,9 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 class IsAdminOrAuthenticatedCreateOnly(permissions.BasePermission):
     """
-    - Анонимы: только просмотр
-    - Залогиненные: просмотр + создание
-    - Админ: всё
+    - Anonimowi użytkownicy: tylko odczyt
+    - Zalogowani użytkownicy: odczyt + tworzenie
+    - Administrator: pełne uprawnienia
     """
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
@@ -25,5 +25,5 @@ class IsAdminOrAuthenticatedCreateOnly(permissions.BasePermission):
         if request.user and request.user.is_staff:
             return True
 
-        # Залогиненный пользователь может только создавать
+        # Zalogowany użytkownik może tylko tworzyć
         return request.user and request.user.is_authenticated and request.method == "POST"
