@@ -1,29 +1,26 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class IsAdminOrReadOnly(permissions.BasePermission):
+class IsAdminOrReadOnly(BasePermission):
     """
-    Anonimowi i zalogowani użytkownicy mogą tylko odczytywać.
-    Administrator — ma pełne uprawnienia.
+    Позволяет только просмотр для всех.
+    Изменение — только для админа.
     """
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        # Чтение — для всех
+        if request.method in SAFE_METHODS:
             return True
+        # Запись — только админ
         return request.user and request.user.is_staff
 
 
-class IsAdminOrAuthenticatedCreateOnly(permissions.BasePermission):
+class IsAuthenticatedForWriteOnly(BasePermission):
     """
-    - Anonimowi użytkownicy: tylko odczyt
-    - Zalogowani użytkownicy: odczyt + tworzenie
-    - Administrator: pełne uprawnienia
+    Только аутентифицированные могут создавать (POST).
+    Все могут просматривать (GET).
     """
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
             return True
+        return request.user and request.user.is_authenticated
 
-        if request.user and request.user.is_staff:
-            return True
-
-        # Zalogowany użytkownik może tylko tworzyć
-        return request.user and request.user.is_authenticated and request.method == "POST"

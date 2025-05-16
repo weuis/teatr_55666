@@ -10,26 +10,28 @@ from main_service.serializer import (
     ReservationSerializer,
     TicketSerializer, TicketDetailSerializer
 )
-from main_service.permissions import IsAdminOrReadOnly, IsAdminOrAuthenticatedCreateOnly
+from main_service.permissions import IsAdminOrReadOnly, IsAuthenticatedForWriteOnly
+from rest_framework.authentication import TokenAuthentication
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = [IsAdminOrReadOnly]
-
+    authentication_classes = (TokenAuthentication,)
 
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     search_fields = ['first_name', 'last_name']
-    ordering_fields = ['last_name', 'first_name']
     permission_classes = [IsAdminOrReadOnly]
+    authentication_classes = (TokenAuthentication,)
 
 
 class PlayViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
     ordering_fields = ['title']
     permission_classes = [IsAdminOrReadOnly]
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
         return Play.objects.prefetch_related('genres', 'actors')
@@ -46,12 +48,14 @@ class TheaterHallViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     ordering_fields = ['number_of_rows', 'seats_per_row']
     permission_classes = [IsAdminOrReadOnly]
+    authentication_classes = (TokenAuthentication,)
 
 
 class PerformanceViewSet(viewsets.ModelViewSet):
     search_fields = ['play__title']
     ordering_fields = ['performance_time']
     permission_classes = [IsAdminOrReadOnly]
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
         return Performance.objects.select_related('play', 'theater_hall')
@@ -64,10 +68,14 @@ class PerformanceViewSet(viewsets.ModelViewSet):
 
 class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
-    permission_classes = [IsAdminOrAuthenticatedCreateOnly]
+    permission_classes = [IsAuthenticatedForWriteOnly]
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
-        return Reservation.objects.filter(user=self.request.user)
+        user = self.request.user
+        if user.is_authenticated:
+            return Reservation.objects.filter(user=user)
+        return Reservation.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -75,7 +83,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
 
 class TicketViewSet(viewsets.ModelViewSet):
     ordering_fields = ['row', 'seat']
-    permission_classes = [IsAdminOrAuthenticatedCreateOnly]
+    permission_classes = [IsAuthenticatedForWriteOnly]
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
         return Ticket.objects.select_related('performance', 'reservation')
