@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'frontend',
     'payments',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
