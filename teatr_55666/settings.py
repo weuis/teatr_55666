@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -112,6 +113,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+PAYU_POS_ID = config('PAYU_POS_ID')
+PAYU_CLIENT_ID = config('PAYU_CLIENT_ID')
+PAYU_CLIENT_SECRET = config('PAYU_CLIENT_SECRET')
+PAYU_SECOND_KEY = config('PAYU_SECOND_KEY')
+PAYU_API_URL = config('PAYU_API_URL', default='https://secure.snd.payu.com')
 
 
 # Internationalization
