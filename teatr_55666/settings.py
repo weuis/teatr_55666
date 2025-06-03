@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'main_service',
     'users',
     'frontend',
-    'payments',
+    'payu_api',
+    'ticketmaster_api',
     'rest_framework',
     'rest_framework.authtoken',
     "drf_spectacular",
@@ -119,6 +120,8 @@ PAYU_CLIENT_ID = config('PAYU_CLIENT_ID')
 PAYU_CLIENT_SECRET = config('PAYU_CLIENT_SECRET')
 PAYU_SECOND_KEY = config('PAYU_SECOND_KEY')
 PAYU_API_URL = config('PAYU_API_URL', default='https://secure.snd.payu.com')
+
+TICKETMASTER_API_KEY = config('TICKETMASTER_API_KEY')
 
 
 # Internationalization

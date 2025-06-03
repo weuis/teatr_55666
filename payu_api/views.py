@@ -1,8 +1,8 @@
-# payments/views.py
+# payu_api/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .services.payu_service import create_payment
+from payu_api.services.payu_service import create_payment
 
 class PayUCreateOrderAPIView(APIView):
     def post(self, request):
