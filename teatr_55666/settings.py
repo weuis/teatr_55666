@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'payments',
     'rest_framework',
     'rest_framework.authtoken',
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 ROOT_URLCONF = 'teatr_55666.urls'
