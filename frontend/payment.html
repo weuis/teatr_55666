@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Оплата квитка</title>
+</head>
+<body>
+  <h1>Оплата квитка</h1>
+  <select id="reservation-select"></select>
+  <button id="pay-btn">Оплатити</button>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('access');
+      const res = await fetch('http://127.0.0.1:8000/api/v1/theatre/reservations/', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const reservations = await res.json();
+      const select = document.getElementById('reservation-select');
+
+      reservations.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = `Вистава: ${r.performance.play.title}, місце: ${r.seat.number}`;
+        select.appendChild(opt);
+      });
+
+      document.getElementById('pay-btn').addEventListener('click', async () => {
+        const reservationId = select.value;
+
+        const payRes = await fetch('http://127.0.0.1:8000/api/v1/payu_api/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ reservation_id: reservationId })
+        });
+
+        if (payRes.ok) {
+          const data = await payRes.json();
+          window.open(data.payment_url, '_blank'); // открываем PayU ссылку
+        } else {
+          alert("Помилка під час оплати");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<nav>
+  <a href="index.html">Головна</a> |
+  <a href="booking.html">Бронювання</a> |
+  <a href="my-tickets.html">Мої квитки</a> |
+  <a href="payment.html">Оплата</a>
+</nav>

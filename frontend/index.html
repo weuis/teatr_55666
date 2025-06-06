@@ -1,0 +1,35 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Репертуар</title>
+</head>
+<body>
+  <h1>Вистави</h1>
+  <div id="play-list"></div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadPlays);
+
+    async function loadPlays() {
+      const res = await fetch('http://127.0.0.1:8000/api/v1/theatre/plays/');
+      const plays = await res.json();
+
+      const container = document.getElementById('play-list');
+      plays.forEach(play => {
+        const div = document.createElement('div');
+        div.innerHTML = `<h3>${play.title}</h3><p>${play.description}</p>`;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
+<nav>
+  <a href="index.html">Головна</a> |
+  <a href="booking.html">Бронювання</a> |
+  <a href="my-tickets.html">Мої квитки</a> |
+  <a href="payment.html">Оплата</a>
+</nav>
