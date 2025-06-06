@@ -1,19 +1,22 @@
-<!-- frontend/register.html -->
+<!-- register.html -->
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <title>Реєстрація</title>
-</head>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Реєстрація</title></head>
 <body>
-  <h2>Реєстрація користувача</h2>
-  <form id="register-form">
-    <input type="text" id="username" placeholder="Ім'я користувача" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Пароль" required />
-    <button type="submit">Зареєструватися</button>
-  </form>
-
-  <script src="js/main.js"></script>
-</body>
-</html>
+  <h1>Реєстрація</h1>
+  <input id="username" placeholder="Користувач"><br>
+  <input id="password" placeholder="Пароль" type="password"><br>
+  <button onclick="register()">Зареєструватися</button>
+  <script>
+    function register() {
+      fetch('http://127.0.0.1:8000/api/v1/user/register/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username: username.value, password: password.value})
+      })
+      .then(r => r.json())
+      .then(data => alert('Реєстрація успішна'));
+    }
+  </script>
+</body
+></html>

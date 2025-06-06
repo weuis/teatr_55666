@@ -1,0 +1,23 @@
+<!-- tickets.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Квитки</title></head>
+<body>
+  <h1>Ваші квитки</h1><ul id="tickets"></ul>
+  <script>
+    const token = localStorage.getItem('token');
+    fetch('http://127.0.0.1:8000/api/v1/theatre/tickets/', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(r => r.json())
+    .then(data => {
+      const ul = document.getElementById('tickets');
+      data.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = `Квиток: ${t.performance.play.title}, Ряд ${t.row}, Місце ${t.seat}`;
+        ul.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>

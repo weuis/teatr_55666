@@ -1,0 +1,20 @@
+<!-- halls.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Зали</title></head>
+<body>
+  <h1>Зали</h1><ul id="halls"></ul>
+  <script>
+    fetch('http://127.0.0.1:8000/api/v1/theatre/theater-halls/')
+      .then(r => r.json())
+      .then(data => {
+        const ul = document.getElementById('halls');
+        data.forEach(h => {
+          const li = document.createElement('li');
+          li.textContent = `${h.name}, місткість: ${h.capacity}`;
+          ul.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>

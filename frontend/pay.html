@@ -1,0 +1,23 @@
+<!-- pay.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Оплата</title></head>
+<body>
+  <h1>Оплата через PayU</h1>
+  <button onclick="pay()">Оплатити замовлення</button>
+  <script>
+    function pay() {
+      fetch('http://127.0.0.1:8000/api/v1/payu_api/', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({order_id: 1})
+      })
+      .then(r => r.json())
+      .then(data => alert('Оплата успішна'));
+    }
+  </script>
+</body>
+</html>

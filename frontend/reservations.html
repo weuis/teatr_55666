@@ -1,0 +1,23 @@
+<!-- reservations.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Бронювання</title></head>
+<body>
+  <h1>Ваші бронювання</h1><ul id="reservations"></ul>
+  <script>
+    const token = localStorage.getItem('token');
+    fetch('http://127.0.0.1:8000/api/v1/theatre/reservations/', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(r => r.json())
+    .then(data => {
+      const ul = document.getElementById('reservations');
+      data.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = `Вистава: ${r.performance.play.title}, Місце: ${r.seat}`;
+        ul.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>

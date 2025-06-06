@@ -1,0 +1,45 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Логін</title>
+</head>
+<body>
+  <h1>Вхід</h1>
+  <input id="username" placeholder="Користувач"><br>
+  <input id="password" placeholder="Пароль" type="password"><br>
+  <button id="loginBtn">Увійти</button>
+  <p id="error" style="color:red;"></p>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', login);
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorElement = document.getElementById("error");
+      errorElement.textContent = "";
+
+      fetch('http://127.0.0.1:8000/api/v1/user/login/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ username, password })
+      })
+      .then(async response => {
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem('token', data.access);
+          alert('Успішно увійшли!');
+           window.location.href = "index.html";
+        } else {
+          throw new Error(data.detail || 'Помилка входу');
+        }
+      })
+      .catch(error => {
+        errorElement.textContent = error.message;
+      });
+    }
+  </script>
+</body>
+</html>

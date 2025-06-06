@@ -1,0 +1,20 @@
+<!-- ticketmaster.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Афіша</title></head>
+<body>
+  <h1>Афіша з Ticketmaster</h1><ul id="events"></ul>
+  <script>
+    fetch('http://127.0.0.1:8000/api/v1/ticketmaster/')
+      .then(r => r.json())
+      .then(data => {
+        const ul = document.getElementById('events');
+        data.forEach(e => {
+          const li = document.createElement('li');
+          li.textContent = `${e.name} – ${e.date}`;
+          ul.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!-- actors.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Актори</title></head>
+<body>
+  <h1>Актори</h1><ul id="actors"></ul>
+  <script>
+    fetch('http://127.0.0.1:8000/api/v1/theatre/actors/')
+      .then(r => r.json())
+      .then(data => {
+        const ul = document.getElementById('actors');
+        data.forEach(a => {
+          const li = document.createElement('li');
+          li.textContent = `${a.first_name} ${a.last_name}`;
+          ul.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
