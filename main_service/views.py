@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from drf_spectacular.utils import extend_schema, OpenApiParameter
+from rest_framework.permissions import AllowAny
 
 from main_service.models import (
     Genre, Actor, Play, TheaterHall,
@@ -23,8 +24,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     """
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
 
 
 @extend_schema(tags=["Actors"])
@@ -35,8 +35,8 @@ class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     search_fields = ['first_name', 'last_name']
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
+
 
     @extend_schema(
         parameters=[
@@ -55,8 +55,7 @@ class PlayViewSet(viewsets.ModelViewSet):
     """
     search_fields = ['title', 'description']
     ordering_fields = ['title']
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         return Play.objects.prefetch_related('genres', 'actors')
@@ -86,8 +85,7 @@ class TheaterHallViewSet(viewsets.ModelViewSet):
     serializer_class = TheaterHallSerializer
     search_fields = ['name']
     ordering_fields = ['number_of_rows', 'seats_per_row']
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
 
     @extend_schema(
         parameters=[
@@ -103,12 +101,11 @@ class TheaterHallViewSet(viewsets.ModelViewSet):
 @extend_schema(tags=["Performances"])
 class PerformanceViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for managing performances.
+    ViewSet for managing performanc.css.
     """
     search_fields = ['play__title']
     ordering_fields = ['performance_time']
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = (TokenAuthentication,)
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         return Performance.objects.select_related('play', 'theater_hall')
@@ -123,7 +120,7 @@ class PerformanceViewSet(viewsets.ModelViewSet):
             OpenApiParameter("search", str, OpenApiParameter.QUERY, description="Search by play title"),
             OpenApiParameter("ordering", str, OpenApiParameter.QUERY, description="Order by performance_time"),
         ],
-        description="List all performances with optional search and ordering."
+        description="List all performanc.css with optional search and ordering."
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)

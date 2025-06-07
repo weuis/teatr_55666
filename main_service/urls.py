@@ -18,7 +18,7 @@ router.register('genres', GenreViewSet, basename='genre')
 router.register('actors', ActorViewSet, basename='actor')
 router.register('plays', PlayViewSet, basename='play')
 router.register('theater-halls', TheaterHallViewSet, basename='theater-hall')
-router.register('performances', PerformanceViewSet, basename='performance')
+router.register('performance', PerformanceViewSet, basename='performance')
 router.register('reservations', ReservationViewSet, basename='reservation')
 router.register('tickets', TicketViewSet, basename='ticket')
 
