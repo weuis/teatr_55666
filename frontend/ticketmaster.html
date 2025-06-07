@@ -5,16 +5,22 @@
 <body>
   <h1>Афіша з Ticketmaster</h1><ul id="events"></ul>
   <script>
-    fetch('http://127.0.0.1:8000/api/v1/ticketmaster/')
+    fetch('http://127.0.0.1:8000/api/v1/ticketmaster/events/')
       .then(r => r.json())
       .then(data => {
         const ul = document.getElementById('events');
         data.forEach(e => {
           const li = document.createElement('li');
-          li.textContent = `${e.name} – ${e.date}`;
-          ul.appendChild(li);
-        });
+          li.innerHTML = `
+            <strong>${e.name}</strong><br>
+            Дата: ${e.dates.start.localDate}<br>
+            <a href="${e.url}" target="_blank">Купити білети</a><br>
+            <img src="${e.images[0]?.url}" width="300"><br><hr>
+          `;
+        ul.appendChild(li);
       });
+    })
+    .catch(err => console.error('Помилка завантаження:', err));
   </script>
 </body>
 </html>
