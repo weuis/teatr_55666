@@ -3,10 +3,11 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Events from Ticketmaster</title>
+  <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">🎭 Theatre</div>
     <ul class="nav-links">
@@ -24,28 +25,117 @@
   </nav>
 
   <main class="main-content">
-    <h1>Other Warsaw Events</h1>
-    <ul id="events" class="event-list"></ul>
+    <div class="page-header">
+      <h1>Other Warsaw Events</h1>
+      <p>Discover amazing events happening in Warsaw</p>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading events...</p>
+    </div>
+
+    <div id="events" class="event-grid"></div>
+
+    <div id="error" class="error-message" style="display: none;">
+      <h3>⚠️ Unable to load events</h3>
+      <p>Please try again later or check your connection.</p>
+    </div>
   </main>
 
   <script>
+    const loadingEl = document.getElementById('loading');
+    const eventsEl = document.getElementById('events');
+    const errorEl = document.getElementById('error');
+
+    function showLoading() {
+      loadingEl.style.display = 'flex';
+      eventsEl.style.display = 'none';
+      errorEl.style.display = 'none';
+    }
+
+    function showEvents() {
+      loadingEl.style.display = 'none';
+      eventsEl.style.display = 'grid';
+      errorEl.style.display = 'none';
+    }
+
+    function showError() {
+      loadingEl.style.display = 'none';
+      eventsEl.style.display = 'none';
+      errorEl.style.display = 'block';
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('us-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    function createEventCard(event) {
+      const eventCard = document.createElement('div');
+      eventCard.className = 'event-card';
+
+      const imageUrl = event.images?.[0]?.url || 'https://via.placeholder.com/400x300?text=No+Image';
+      const eventDate = event.dates?.start?.localDate || 'Date TBA';
+      const eventName = event.name || 'Unknown Event';
+      const eventUrl = event.url || '#';
+
+      eventCard.innerHTML = `
+        <div class="event-image-container">
+          <img src="${imageUrl}" alt="${eventName}" class="event-image" loading="lazy">
+          <div class="event-overlay">
+            <div class="event-date">${formatDate(eventDate)}</div>
+          </div>
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">${eventName}</h2>
+          <div class="event-info">
+            <span class="event-date-text">📅 ${formatDate(eventDate)}</span>
+            <span class="event-location">📍 Warsaw</span>
+          </div>
+          <a href="${eventUrl}" target="_blank" class="buy-button">
+            <span>Buy Tickets</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      `;
+
+      return eventCard;
+    }
+
+    showLoading();
+
     fetch('http://127.0.0.1:8000/api/v1/ticketmaster/events/')
-      .then(r => r.json())
-      .then(data => {
-        const ul = document.getElementById('events');
-        data.forEach(e => {
-          const li = document.createElement('li');
-          li.className = 'event-item';
-          li.innerHTML = `
-            <h2>${e.name}</h2>
-            <p><strong>Date:</strong> ${e.dates.start.localDate}</p>
-            <a href="${e.url}" target="_blank" class="button">Buy Tickets</a><br>
-            <img src="${e.images[0]?.url}" alt="${e.name}" class="event-image">
-          `;
-          ul.appendChild(li);
-        });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
       })
-      .catch(err => console.error('Failed to load events:', err));
+      .then(data => {
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error('No events found');
+        }
+
+        data.forEach(event => {
+          const eventCard = createEventCard(event);
+          eventsEl.appendChild(eventCard);
+        });
+
+        showEvents();
+      })
+      .catch(error => {
+        console.error('Failed to load events:', error);
+        showError();
+      });
   </script>
 </body>
 </html>
