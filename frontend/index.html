@@ -2,51 +2,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Theatre Online</title>
-  <link rel="stylesheet" href="css/index.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Theatre Online</title>
+    <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">🎭Theatre Project</div>
-      <ul class="nav-links">
-        <li><a href="index.html"> Home</a></li>
-        <li><a href="genres.html">Genres</a></li>
-        <li><a href="actors.html">Actors</a></li>
-        <li><a href="plays.html">Plays</a></li>
-        <li><a href="halls.html">Halls</a></li>
-        <li><a href="performances.html">Performances</a></li>
-        <li><a href="reservations.html">Reservations</a></li>
-        <li><a href="tickets.html">Tickets</a></li>
-        <li><a href="pay.html">Payment</a></li>
-        <li><span id="auth-links"></span></li>
-      </ul>
-    </nav>
-  </header>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Theatre Project</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="genres.html">Genres</a></li>
+                    <li><a href="actors.html">Actors</a></li>
+                    <li><a href="plays.html">Plays</a></li>
+                    <li><a href="halls.html">Halls</a></li>
+                    <li><a href="performances.html">Performances</a></li>
+                    <li><a href="reservations.html">Reservations</a></li>
+                    <li><a href="tickets.html">Tickets</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><span id="auth-links"></span></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <main class="main-content">
-    <h1>Welcome to the Theatre</h1>
-    <p>Experience timeless performances, discover brilliant actors, and book your seats all in one place.</p>
-    <p class="partner-info">
-      Looking for even more shows in your city? Check out our partner page with other performances in the Warsaw.
-    </p>
-    <button class="button" onclick="window.location.href='ticketmaster.html'">Explore Our Partner Events</button>
-  </main>
+    <main class="container">
+        <div class="main-content">
+            <h1 class="page-title">Welcome to Our Theatre</h1>
+            <p class="page-subtitle">
+                Experience timeless performances, discover brilliant actors, and book your
+                seats all in one place.
+            </p>
+        </div>
 
-  <script>
-    const authLinks = document.getElementById('auth-links');
-    if (localStorage.getItem('token')) {
-      authLinks.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
-    } else {
-      authLinks.innerHTML = '<a href="login.html">Login</a> | <a href="register.html">Register</a>';
-    }
+        <div class="events-section">
+            <div class="event-card">
+                <div class="event-header">
+                    <h2 class="event-title">Classical Symphony Night</h2>
+                    <div class="event-date">Date: 2025-07-25</div>
+                    <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                         alt="Classical Orchestra" class="event-image">
+                    <p class="event-description">
+                        Immerse yourself in the timeless beauty of classical music with the Warsaw Philharmonic Orchestra.
+                        Tonight's program features masterpieces by Mozart, Beethoven, and Chopin in the stunning
+                        National Theatre venue.
+                    </p>
+                    <a href="pay.html" class="buy-button">Buy Tickets</a>
+                </div>
+            </div>
 
-    function logout() {
-      localStorage.removeItem('token');
-      location.reload();
-    }
-  </script>
+            <div class="event-card">
+                <div class="event-header">
+                    <h2 class="event-title">Modern Dance Spectacular</h2>
+                    <div class="event-date">Date: 2025-08-02</div>
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                         alt="Modern Dance Performance" class="event-image">
+                    <p class="event-description">
+                        Witness the artistry of contemporary dance as leading performers from across Europe come together
+                        for this exclusive showcase. Featuring innovative choreography and stunning visual effects that
+                        push the boundaries of traditional performance art.
+                    </p>
+                    <a href="pay.html" class="buy-button">Buy Tickets</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="partner-section">
+            <p class="partner-text">
+                Looking for even more shows in your city? Check out our partner page
+                with other performances in Warsaw and discover hidden gems across the city.
+            </p>
+            <button class="partner-button" onclick="window.location.href='ticketmaster.html'">Explore Our Partner Events</button>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
 </body>
 </html>
+
