@@ -28,16 +28,16 @@
   </main>
 
   <script>
-    fetch('http://127.0.0.1:8000/api/v1/theatre/theater-halls/')
-      .then(r => r.json())
-      .then(data => {
-        const ul = document.getElementById('halls');
-        data.forEach(h => {
-          const li = document.createElement('li');
-          li.textContent = `${h.name}, місткість: ${h.capacity}`;
-          ul.appendChild(li);
-        });
+  fetch('http://127.0.0.1:8000/api/v1/theatre/theater-halls/')
+    .then(r => r.json())
+    .then(data => {
+      const ul = document.getElementById('halls');
+      data.forEach(h => {
+        const li = document.createElement('li');
+        li.textContent = `${h.name}, rows: ${h.number_of_rows}, seats per row: ${h.seats_per_row}`;
+        ul.appendChild(li);
       });
+   });
   </script>
 </body>
 </html>

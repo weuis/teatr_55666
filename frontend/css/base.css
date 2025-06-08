@@ -73,6 +73,126 @@ ul#genres li:hover {
   box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
 }
 
+ul#actors {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul#actors li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+ul#actors li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
+ul#halls {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul#halls li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+ul#halls li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
+ul#performances {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul#performances li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+ul#performances li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
+ul#reservations {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul#reservations li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+ul#reservations:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
+ul#tickets {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul#tickets li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+ul#tickets:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
