@@ -1,32 +1,48 @@
-<!-- index.html: Головна сторінка -->
+<!-- index.html: Home Page -->
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Театр Онлайн</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theatre Online</title>
+  <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-  <nav>
-    <a href="index.html">Головна</a> |
-    <a href="genres.html">Жанри</a> |
-    <a href="actors.html">Актори</a> |
-    <a href="plays.html">Вистави</a> |
-    <a href="halls.html">Зали</a> |
-    <a href="performances.html">Виступи</a> |
-    <a href="reservations.html">Бронювання</a> |
-    <a href="tickets.html">Квитки</a> |
-    <a href="pay.html">Оплата</a> |
-    <a href="ticketmaster.html">Афіша</a> |
-    <span id="auth-links"></span>
-  </nav>
-  <h1>Ласкаво просимо до Театру</h1>
+  <header>
+    <nav class="navbar">
+      <div class="logo">🎭Theatre Project</div>
+      <ul class="nav-links">
+        <li><a href="index.html"> Home</a></li>
+        <li><a href="genres.html">Genres</a></li>
+        <li><a href="actors.html">Actors</a></li>
+        <li><a href="plays.html">Plays</a></li>
+        <li><a href="halls.html">Halls</a></li>
+        <li><a href="performances.html">Performances</a></li>
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="tickets.html">Tickets</a></li>
+        <li><a href="pay.html">Payment</a></li>
+        <li><span id="auth-links"></span></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <h1>Welcome to the Theatre</h1>
+    <p>Experience timeless performances, discover brilliant actors, and book your seats all in one place.</p>
+    <p class="partner-info">
+      Looking for even more shows in your city? Check out our partner page with other performances in the Warsaw.
+    </p>
+    <button class="button" onclick="window.location.href='ticketmaster.html'">Explore Our Partner Events</button>
+  </main>
+
   <script>
     const authLinks = document.getElementById('auth-links');
     if (localStorage.getItem('token')) {
-      authLinks.innerHTML = '<a href="#" onclick="logout()">Вийти</a>';
+      authLinks.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
     } else {
-      authLinks.innerHTML = '<a href="login.html">Логін</a> | <a href="register.html">Реєстрація</a>';
+      authLinks.innerHTML = '<a href="login.html">Login</a> | <a href="register.html">Register</a>';
     }
+
     function logout() {
       localStorage.removeItem('token');
       location.reload();
