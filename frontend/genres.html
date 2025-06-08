@@ -1,17 +1,31 @@
-<!-- genres.html -->
+<!-- genre.html: Genres Page -->
 <!DOCTYPE html>
-<html lang="uk">
-<head><meta charset="UTF-8"><title>Жанри</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Genres</title>
+  <link rel="stylesheet" href="css/base.css" />
+</head>
 <body>
-  <h1>Жанри</h1><ul id="genres"></ul>
+
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+    </ul>
+  </nav>
+  <h1>Browse Theatre Genres</h1>
+  <ul id="genres"></ul>
+
   <script>
     fetch('http://127.0.0.1:8000/api/v1/theatre/genres/')
-      .then(r => r.json())
+      .then(response => response.json())
       .then(data => {
         const ul = document.getElementById('genres');
-        data.forEach(g => {
+        data.forEach(genre => {
           const li = document.createElement('li');
-          li.textContent = g.name;
+          li.textContent = genre.name;
           ul.appendChild(li);
         });
       });
