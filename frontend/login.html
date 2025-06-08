@@ -3,19 +3,31 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Логін</title>
+  <title>Login</title>
+  <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
-  <h1>Вхід</h1>
-  <input id="username" placeholder="Користувач"><br>
-  <input id="password" placeholder="Пароль" type="password"><br>
-  <button id="loginBtn">Увійти</button>
-  <p id="error" style="color:red;"></p>
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <h1>Login</h1>
+    <form id="login-form" class="auth-form">
+      <label for="username"></label><input id="username" placeholder="Username" required /><br>
+      <label for="password"></label><input id="password" type="password" placeholder="Password" required /><br>
+      <button type="submit">Login</button>
+      <p id="error" style="color: red;"></p>
+    </form>
+  </main>
 
   <script>
-    document.getElementById('loginBtn').addEventListener('click', login);
-
-    function login() {
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
       const errorElement = document.getElementById("error");
@@ -23,23 +35,22 @@
 
       fetch('http://127.0.0.1:8000/api/v1/user/login/', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       })
       .then(async response => {
         const data = await response.json();
         if (response.ok) {
           localStorage.setItem('token', data.access);
-          alert('Успішно увійшли!');
-           window.location.href = "index.html";
+          window.location.href = "index.html";
         } else {
-          throw new Error(data.detail || 'Помилка входу');
+          throw new Error(data.detail || 'Login failed');
         }
       })
       .catch(error => {
         errorElement.textContent = error.message;
       });
-    }
+    });
   </script>
 </body>
 </html>

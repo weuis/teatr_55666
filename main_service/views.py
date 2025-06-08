@@ -101,7 +101,7 @@ class TheaterHallViewSet(viewsets.ModelViewSet):
 @extend_schema(tags=["Performances"])
 class PerformanceViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for managing performanc.css.
+    ViewSet for managing performances.
     """
     search_fields = ['play__title']
     ordering_fields = ['performance_time']

@@ -1,9 +1,33 @@
 <!-- ticketmaster.html -->
 <!DOCTYPE html>
 <html lang="uk">
-<head><meta charset="UTF-8"><title>Афіша</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Events from Ticketmaster</title>
+</head>
 <body>
-  <h1>Афіша з Ticketmaster</h1><ul id="events"></ul>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="genres.html">Genres</a></li>
+      <li><a href="actors.html">Actors</a></li>
+      <li><a href="plays.html">Plays</a></li>
+      <li><a href="performances.html">Performances</a></li>
+      <li><a href="halls.html">Halls</a></li>
+      <li><a href="reservations.html">Reservations</a></li>
+      <li><a href="tickets.html">Tickets</a></li>
+      <li><a href="pay.html">Payment</a></li>
+      <li><span id="auth-links"></span></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <h1>Other Warsaw Events</h1>
+    <ul id="events" class="event-list"></ul>
+  </main>
+
   <script>
     fetch('http://127.0.0.1:8000/api/v1/ticketmaster/events/')
       .then(r => r.json())
@@ -11,16 +35,17 @@
         const ul = document.getElementById('events');
         data.forEach(e => {
           const li = document.createElement('li');
+          li.className = 'event-item';
           li.innerHTML = `
-            <strong>${e.name}</strong><br>
-            Дата: ${e.dates.start.localDate}<br>
-            <a href="${e.url}" target="_blank">Купити білети</a><br>
-            <img src="${e.images[0]?.url}" width="300"><br><hr>
+            <h2>${e.name}</h2>
+            <p><strong>Date:</strong> ${e.dates.start.localDate}</p>
+            <a href="${e.url}" target="_blank" class="button">Buy Tickets</a><br>
+            <img src="${e.images[0]?.url}" alt="${e.name}" class="event-image">
           `;
-        ul.appendChild(li);
-      });
-    })
-    .catch(err => console.error('Помилка завантаження:', err));
+          ul.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Failed to load events:', err));
   </script>
 </body>
 </html>

@@ -1,9 +1,46 @@
 <!-- plays.html -->
-<!DOCTYPE html>
 <html lang="uk">
-<head><meta charset="UTF-8"><title>Вистави</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Plays</title>
+  <link rel="stylesheet" href="css/plays.css" />
+</head>
 <body>
-  <h1>Вистави</h1><ul id="plays"></ul>
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="genres.html">Genres</a></li>
+        <li><a href="actors.html">Actors</a></li>
+        <li><a href="halls.html">Halls</a></li>
+        <li><a href="performances.html">Performances</a></li>
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="tickets.html">Tickets</a></li>
+        <li><a href="pay.html">Payment</a></li>
+        <li><span id="auth-links"></span></li>
+      </ul>
+  </nav>
+
+    <main class="main-content">
+        <h1>Plays</h1>
+        <p>
+            Explore our full repertoire of theatrical plays,
+            spanning a variety of genres — from timeless
+            classics to bold contemporary works. Discover what
+            each performance is about and find your next
+            favorite show.
+        </p>
+
+        <ul id="genres">
+            <li>Drama</li>
+            <li>Comedy</li>
+            <li>Musical Theatre</li>
+            <li>Classical</li>
+            <li>Contemporary</li>
+            <li>Experimental</li>
+        </ul>
+    </main>
+
   <script>
     fetch('http://127.0.0.1:8000/api/v1/theatre/plays/')
       .then(r => r.json())

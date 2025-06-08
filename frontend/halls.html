@@ -1,9 +1,32 @@
 <!-- halls.html -->
 <!DOCTYPE html>
 <html lang="uk">
-<head><meta charset="UTF-8"><title>Зали</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Halls</title>
+  <link rel="stylesheet" href="css/base.css" />
+</head>
 <body>
-  <h1>Зали</h1><ul id="halls"></ul>
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="genres.html">Genres</a></li>
+        <li><a href="actors.html">Actors</a></li>
+        <li><a href="plays.html">Plays</a></li>
+        <li><a href="performances.html">Performances</a></li>
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="tickets.html">Tickets</a></li>
+        <li><a href="pay.html">Payment</a></li>
+        <li><span id="auth-links"></span></li>
+      </ul>
+  </nav>
+
+  <main class="main-content">
+    <h1>Theatre Halls </h1>
+    <ul id="halls"></ul>
+  </main>
+
   <script>
     fetch('http://127.0.0.1:8000/api/v1/theatre/theater-halls/')
       .then(r => r.json())

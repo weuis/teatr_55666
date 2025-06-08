@@ -1,9 +1,32 @@
 <!-- tickets.html -->
 <!DOCTYPE html>
 <html lang="uk">
-<head><meta charset="UTF-8"><title>Квитки</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Tickets</title>
+  <link rel="stylesheet" href="css/base.css" />
+</head>
 <body>
-  <h1>Ваші квитки</h1><ul id="tickets"></ul>
+  <nav class="navbar">
+    <div class="logo">🎭 Theatre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="genres.html">Genres</a></li>
+      <li><a href="actors.html">Actors</a></li>
+      <li><a href="plays.html">Plays</a></li>
+      <li><a href="performances.html">Performances</a></li>
+      <li><a href="halls.html">Halls</a></li>
+      <li><a href="reservations.html">Reservations</a></li>
+      <li><a href="pay.html">Payment</a></li>
+      <li><span id="auth-links"></span></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <h1>Your Tickets</h1>
+    <ul id="tickets"></ul>
+  </main>
+
   <script>
     const token = localStorage.getItem('token');
     fetch('http://127.0.0.1:8000/api/v1/theatre/tickets/', {
@@ -14,7 +37,7 @@
       const ul = document.getElementById('tickets');
       data.forEach(t => {
         const li = document.createElement('li');
-        li.textContent = `Квиток: ${t.performance.play.title}, Ряд ${t.row}, Місце ${t.seat}`;
+        li.textContent = `Ticket: ${t.performance.play.title}, Row ${t.row}, Seat ${t.seat}`;
         ul.appendChild(li);
       });
     });
