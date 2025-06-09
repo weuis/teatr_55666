@@ -79,13 +79,13 @@
 
         if (!response.ok) {
           const errText = await response.text();
-          throw new Error(`Помилка ${response.status}: ${errText}`);
+          throw new Error(`Error ${response.status}: ${errText}`);
         }
 
         const result = await response.json();
-        alert('Оплата успішна! Деталі:\n' + JSON.stringify(result, null, 2));
+        alert('Successfully payment' );
       } catch (error) {
-        alert('Помилка при оплаті: ' + error.message);
+        alert('Error: ' + error.message);
       }
     });
   </script>

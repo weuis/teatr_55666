@@ -1,24 +1,16 @@
 import requests
+from urllib.parse import urlencode
 from django.conf import settings
 
 def get_access_token():
-    url = f"{settings.PAYU_API_URL}/pl/standard/user/oauth/token"
-    data = {
-        "grant_type": "client_credentials",
-        "client_id": settings.PAYU_CLIENT_ID,
-        "client_secret": settings.PAYU_CLIENT_SECRET
-    }
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-
-    response = requests.post(url, headers=headers, data=data)
-    response.raise_for_status()
-    return response.json()["access_token"]
+    return "test_token_123"
 
 def create_payment(order_id, amount, buyer_email, description):
     access_token = get_access_token()
-    url = f"{settings.PAYU_API_URL}/api/v2_1/orders"
+    url = "https://httpbin.org/post"
     headers = {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "Authorization": f"Bearer {access_token}"
     }
 
@@ -47,7 +39,6 @@ def create_payment(order_id, amount, buyer_email, description):
     print("Request payload:", payload)
 
     response = requests.post(url, headers=headers, json=payload)
-    print("Response status:", response.status_code)
-    print("Response body:", response.text)
+    print("PayU response text:", response.text)
     response.raise_for_status()
     return response.json()

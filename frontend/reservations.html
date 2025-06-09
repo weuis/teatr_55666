@@ -24,23 +24,46 @@
 
   <main class="main-content">
     <h1>Your reservations</h1>
+    <p>
+        Secure your seat for an unforgettable theater experience with ease!
+        Our Reservations page is your go-to spot to book tickets for all performances, events, and special shows.
+        Browse available dates, choose your preferred seats, and complete your booking quickly and securely.
+    </p>
     <ul id="reservations"></ul>
   </main>
 
-  <script>
-    const token = localStorage.getItem('token');
-    fetch('http://127.0.0.1:8000/api/v1/theatre/reservations/', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    })
-    .then(r => r.json())
-    .then(data => {
-      const ul = document.getElementById('reservations');
-      data.forEach(r => {
-        const li = document.createElement('li');
-        li.textContent = `Play: ${r.performance.play.title}, Seat: ${r.seat}`;
-        ul.appendChild(li);
+<script>
+  const token = localStorage.getItem('token');
+
+  fetch('http://127.0.0.1:8000/api/v1/theatre/reservations/', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Ошибка запроса: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    const ul = document.getElementById('reservations');
+    data.forEach(r => {
+      const li = document.createElement('li');
+      const formattedDate = new Date(r.created_at).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
       });
+
+      li.textContent = `Reservation #${r.id} by user ID ${r.user}, created at ${formattedDate}`;
+      ul.appendChild(li);
     });
-  </script>
+  })
+</script>
 </body>
 </html>

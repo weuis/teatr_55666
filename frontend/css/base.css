@@ -97,6 +97,31 @@ ul#actors li:hover {
   box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
 }
 
+ul#plays {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+ul#plays li {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: var(--transition);
+  text-align: center;
+}
+
+ul#plays li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+}
+
 ul#halls {
   list-style: none;
   padding: 0;
@@ -121,7 +146,7 @@ ul#halls li:hover {
   box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
 }
 
-ul#performances {
+ul#performance {
   list-style: none;
   padding: 0;
   display: grid;
@@ -130,7 +155,7 @@ ul#performances {
   margin: 0 auto;
 }
 
-ul#performances li {
+ul#performance li {
   background: #fff;
   padding: 1rem 1.5rem;
   border-radius: var(--radius);
@@ -140,7 +165,7 @@ ul#performances li {
   transition: var(--transition);
 }
 
-ul#performances li:hover {
+ul#performance li:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
 }

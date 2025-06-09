@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Plays</title>
-  <link rel="stylesheet" href="css/plays.css" />
+  <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
   <nav class="navbar">
@@ -22,36 +22,28 @@
   </nav>
 
     <main class="main-content">
-        <h1>Plays</h1>
+        <h1>Theatre Plays</h1>
         <p>
-            Explore our full repertoire of theatrical plays,
-            spanning a variety of genres — from timeless
-            classics to bold contemporary works. Discover what
-            each performance is about and find your next
-            favorite show.
+          Discover musicals filled with powerful songs and choreography, emotionally charged tragedies,
+          imaginative fantasy productions, and family-friendly performances perfect for all ages.
         </p>
-
-        <ul id="genres">
-            <li>Drama</li>
-            <li>Comedy</li>
-            <li>Musical Theatre</li>
-            <li>Classical</li>
-            <li>Contemporary</li>
-            <li>Experimental</li>
-        </ul>
+        <ul id="plays"></ul>
     </main>
 
-  <script>
-    fetch('http://127.0.0.1:8000/api/v1/theatre/plays/')
-      .then(r => r.json())
-      .then(data => {
-        const ul = document.getElementById('plays');
-        data.forEach(p => {
-          const li = document.createElement('li');
-          li.textContent = `${p.title} (${p.genre.name})`;
-          ul.appendChild(li);
-        });
+<script>
+  fetch('http://127.0.0.1:8000/api/v1/theatre/plays/')
+    .then(r => r.json())
+    .then(data => {
+      const ul = document.getElementById('plays');
+      data.forEach(play => {
+        const genreNames = play.genres.map(g => g.name).join(', ');
+        const actorNames = play.actors.map(a => `${a.first_name} ${a.last_name}`).join(', ');
+
+        const li = document.createElement('li');
+        li.textContent = `${play.title} — Genres: ${genreNames} — Actors: ${actorNames}`;
+        ul.appendChild(li);
       });
-  </script>
+    });
+</script>
 </body>
 </html>

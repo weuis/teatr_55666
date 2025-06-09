@@ -3,7 +3,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Виступи</title>
+  <title>Performances</title>
   <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
@@ -24,17 +24,22 @@
 
   <main class="main-content">
     <h1>Performances</h1>
-    <ul id="performances"></ul>
+    <p>
+      Dive into the world of our captivating performances, where stories come alive on stage through powerful acting,
+      stunning visuals, and unforgettable music. Each show is a unique journey crafted to engage your emotions
+      and spark your imagination.
+    </p>
+    <ul id="performance"></ul>
   </main>
 
   <script>
-    fetch('http://127.0.0.1:8000/api/v1/theatre/performances/')
+    fetch('http://127.0.0.1:8000/api/v1/theatre/performance/')
       .then(r => r.json())
       .then(data => {
-        const ul = document.getElementById('performances');
+        const ul = document.getElementById('performance');
         data.forEach(p => {
           const li = document.createElement('li');
-          const date = new Date(p.date).toLocaleString('uk-UA', {
+          const date = new Date(p.performance_time).toLocaleString('us-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
